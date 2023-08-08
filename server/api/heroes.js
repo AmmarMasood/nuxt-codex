@@ -1,7 +1,7 @@
 export default defineEventHandler(async () => {
 
   try {
-    const response = await fetch(`${process.env.BACKEND_URL}/heroes?populate=*`, {
+    const response = await fetch(`${process.env.BACKEND_URL}/heroes?populate=*&pagination[pageSize]=300`, {
       headers: {
         Authorization: `Bearer ${process.env.BACKEND_API_KEY}`
       }
