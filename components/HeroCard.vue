@@ -1,0 +1,89 @@
+<template>
+  <div class="hero-card" :class="rarity">
+    <img class="hero-card-border" :src="border" />
+    <img
+      class="hero-card-image"
+      :src="props.hero.image"
+      :alt="`Image of ${hero.name}`"
+    />
+  </div>
+</template>
+
+<script setup>
+const props = defineProps({
+  hero: {
+    type: Object,
+    required: true,
+  },
+});
+
+const rarity = computed(() => {
+  return props.hero.rarity.toLowerCase();
+});
+
+const border = computed(() => {
+  const images = {
+    Legendary: "/image/border-gold.png",
+    Epic: "/image/border-purple.png",
+    Rare: "/image/border-blue.png",
+    Uncommon: "/image/border-green.png",
+    Common: "/image/border-grey.png",
+  };
+
+  return images[props.hero.rarity];
+});
+</script>
+
+<style lang="scss" scoped>
+.hero-card {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 135px;
+  min-height: 200px;
+
+  &.legendary {
+    background: url("~/assets/image/card-gold.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  &.epic {
+    background: url("~/assets/image/card-purple.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  &.rare {
+    background: url("~/assets/image/card-blue.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  &.uncommon {
+    background: url("~/assets/image/card-green.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  &.common {
+    background: url("~/assets/image/card-grey.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .hero-card-image {
+    max-height: 95%;
+  }
+
+  .hero-card-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>

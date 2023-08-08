@@ -1,0 +1,42 @@
+export default defineEventHandler(async () => {
+
+  try {
+    const response = await fetch(`${process.env.BACKEND_URL}/heroes?populate=*`, {
+      headers: {
+        Authorization: `Bearer ${process.env.BACKEND_API_KEY}`
+      }
+    })
+
+    const body = await response.json()
+
+    const heroes = body.data.map((item) => {
+      return {
+        name: item.attributes.name,
+        isLord: item.attributes.isLord,
+        isRanged: item.attributes.ranged,
+        description: item.attributes.description,
+        title: item.attributes.title,
+        class: item.attributes.class?.data.attributes.name,
+        rarity: item.attributes.rarity?.data.attributes.name,
+        damageType: item.attributes.damageType?.data.attributes.name,
+        image: item.attributes.image?.data.attributes.url,
+        factions: item.attributes.factions.data.map((faction) => {
+          return {
+            name: faction.attributes.name,
+            shortName: faction.attributes.shortName
+          }
+        }),
+        tags: item.attributes.tags.data.map((tag) => {
+          return tag.attributes.name
+        }),
+        basicAttributes: item.attributes.basicAttributes,
+        promotedAttributes: item.attributes.promotedAttributes,
+      }
+    })
+
+    return heroes
+  } catch (e) {
+    console.log(e)
+    return 'Something went wrong'
+  }
+})
