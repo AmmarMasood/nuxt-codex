@@ -43,35 +43,27 @@ const border = computed(() => {
   align-items: center;
   min-width: 135px;
   min-height: 200px;
+  background-size: cover;
+  background-repeat: no-repeat;
 
   &.legendary {
-    background: url("~/assets/image/card-gold.png");
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-image: url("~/assets/image/card-gold.png");
   }
 
   &.epic {
-    background: url("~/assets/image/card-purple.png");
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-image: url("~/assets/image/card-purple.png");
   }
 
   &.rare {
-    background: url("~/assets/image/card-blue.png");
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-image: url("~/assets/image/card-blue.png");
   }
 
   &.uncommon {
-    background: url("~/assets/image/card-green.png");
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-image: url("~/assets/image/card-green.png");
   }
 
   &.common {
-    background: url("~/assets/image/card-grey.png");
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-image: url("~/assets/image/card-grey.png");
   }
 
   .hero-card-image {
