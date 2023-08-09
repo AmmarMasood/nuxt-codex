@@ -77,5 +77,10 @@ const border = computed(() => {
     width: 100%;
     height: 100%;
   }
+
+  .hero-card-border:hover {
+    transform: translate3D(0, -1px, 0) scale(1.03);
+    transition: all 0.4s ease;
+  }
 }
 </style>
