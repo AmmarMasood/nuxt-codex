@@ -7,7 +7,7 @@
         placeholder="Search hero name.."
         v-model="searchTerm"
       />
-      <input type="checkbox" v-model="maxLevel" name="maxLevel" />
+      <input type="checkbox" v-model="maxLevel" id="maxLevel" />
       <label for="maxLevel">Max Level</label>
     </div>
     <div class="gallery">

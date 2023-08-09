@@ -6,6 +6,7 @@
       :src="props.hero.image"
       :alt="`Image of ${hero.name}`"
     />
+    <FactionBanner :factions="props.hero.factions" />
     <ClassBanner :heroClass="props.hero.class" />
     <div class="level" v-if="!maxLevel">lvl. 1</div>
     <div class="level max" v-else>lvl. Max</div>
