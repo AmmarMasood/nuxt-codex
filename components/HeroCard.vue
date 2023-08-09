@@ -6,7 +6,9 @@
       :src="props.hero.image"
       :alt="`Image of ${hero.name}`"
     />
-    <div class=""></div>
+    <ClassBanner :heroClass="props.hero.class" />
+    <div class="level" v-if="!maxLevel">lvl. 1</div>
+    <div class="level max" v-else>lvl. Max</div>
   </div>
 </template>
 
@@ -15,6 +17,11 @@ const props = defineProps({
   hero: {
     type: Object,
     required: true,
+  },
+  maxLevel: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
 });
 
@@ -78,6 +85,17 @@ const border = computed(() => {
     left: 0;
     width: 100%;
     height: 100%;
+  }
+
+  .level {
+    color: white;
+    position: absolute;
+    font-size: 2rem;
+    bottom: 3rem;
+
+    &.max {
+      color: lightgreen;
+    }
   }
 }
 

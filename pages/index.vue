@@ -7,10 +7,12 @@
         placeholder="Search hero name.."
         v-model="searchTerm"
       />
+      <input type="checkbox" v-model="maxLevel" name="maxLevel" />
+      <label for="maxLevel">Max Level</label>
     </div>
     <div class="gallery">
       <div v-for="hero in filteredHeroes">
-        <HeroCard :hero="hero" />
+        <HeroCard :hero="hero" :maxLevel="maxLevel" />
       </div>
     </div>
   </div>
@@ -27,6 +29,7 @@ const rarities = {
 
 const heroes = await $fetch("/api/heroes");
 const searchTerm = ref("");
+const maxLevel = ref(false);
 
 const filteredHeroes = computed(() => {
   if (searchTerm.value.length < 1) {
