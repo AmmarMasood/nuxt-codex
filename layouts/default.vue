@@ -23,8 +23,6 @@
   }
 
   .page-content {
-    // width: 100%;
-    // height: 100%;
     display: grid;
     grid-template-columns: 1fr 104.8rem 1fr;
   }

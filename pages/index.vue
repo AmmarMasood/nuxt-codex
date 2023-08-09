@@ -1,8 +1,15 @@
 <template>
   <div class="gallery-page">
     <h1>Heroes</h1>
+    <div class="gallery-filter">
+      <input
+        type="text"
+        placeholder="Search hero name.."
+        v-model="searchTerm"
+      />
+    </div>
     <div class="gallery">
-      <div v-for="hero in sortByRarity(heroes)">
+      <div v-for="hero in filteredHeroes">
         <HeroCard :hero="hero" />
       </div>
     </div>
@@ -19,9 +26,20 @@ const rarities = {
 };
 
 const heroes = await $fetch("/api/heroes");
+const searchTerm = ref("");
 
-const sortByRarity = () => {
-  return heroes.sort((a, b) => {
+const filteredHeroes = computed(() => {
+  if (searchTerm.value.length < 1) {
+    return sortByRarity(heroes);
+  }
+
+  return heroes.filter((hero) =>
+    hero.name.toLowerCase().includes(searchTerm.value.toLowerCase())
+  );
+});
+
+const sortByRarity = (toBeSorted) => {
+  return toBeSorted.sort((a, b) => {
     const rarityComparison = rarities[a.rarity] - rarities[b.rarity];
     if (rarityComparison === 0) {
       return a.name.localeCompare(b.name);

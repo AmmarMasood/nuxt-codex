@@ -6,6 +6,7 @@
       :src="props.hero.image"
       :alt="`Image of ${hero.name}`"
     />
+    <div class=""></div>
   </div>
 </template>
 
