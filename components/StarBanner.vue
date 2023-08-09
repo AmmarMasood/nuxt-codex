@@ -43,7 +43,7 @@ const greyStars = getStars("grey");
 <style lang="scss">
 .star-banner {
   position: absolute;
-  left: 2.5rem;
+  left: 2.4rem;
   bottom: 1.6rem;
   width: 100%;
 
