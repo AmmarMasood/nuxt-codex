@@ -9,10 +9,17 @@
       />
       <input type="checkbox" v-model="maxLevel" id="maxLevel" />
       <label for="maxLevel">Max Level</label>
+      <select id="faction" v-model="factionFilter">
+        <option value="" selected>Select faction...</option>
+        <option :value="faction.name" v-for="faction in factions">
+          {{ faction.name }}
+        </option>
+      </select>
     </div>
     <div class="gallery">
       <div v-for="hero in filteredHeroes">
         <HeroCard :hero="hero" :maxLevel="maxLevel" />
+        <p>{{ hero.name }}</p>
       </div>
     </div>
   </div>
@@ -28,17 +35,34 @@ const rarities = {
 };
 
 const heroes = await $fetch("/api/heroes");
+const factions = await $fetch("/api/factions");
+
 const searchTerm = ref("");
 const maxLevel = ref(false);
+const factionFilter = ref("");
 
 const filteredHeroes = computed(() => {
+  let sortedHeroes = heroes;
+
   if (searchTerm.value.length < 1) {
-    return sortByRarity(heroes);
+    sortedHeroes = sortByRarity(sortedHeroes);
   }
 
-  return heroes.filter((hero) =>
-    hero.name.toLowerCase().includes(searchTerm.value.toLowerCase())
-  );
+  if (factionFilter.value !== "") {
+    sortedHeroes = sortedHeroes.filter((hero) => {
+      return hero.factions.some((faction) => {
+        return faction.name === factionFilter.value;
+      });
+    });
+  }
+
+  if (searchTerm.value.length > 0) {
+    sortedHeroes = sortedHeroes.filter((hero) =>
+      hero.name.toLowerCase().includes(searchTerm.value.toLowerCase())
+    );
+  }
+
+  return sortedHeroes;
 });
 
 const sortByRarity = (toBeSorted) => {
@@ -55,11 +79,16 @@ const sortByRarity = (toBeSorted) => {
 <style lang="scss">
 .gallery-page {
   width: 100%;
+
   .gallery {
     margin-top: 3rem;
     display: grid;
     grid-gap: 3em;
     grid-template-columns: repeat(auto-fit, 12.2rem);
+
+    p {
+      font-size: 1.5rem;
+    }
   }
 }
 </style>
