@@ -41,10 +41,11 @@ const border = computed(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 135px;
-  min-height: 200px;
+  min-width: 13.5rem;
+  min-height: 20rem;
   background-size: cover;
   background-repeat: no-repeat;
+  transition: all 0.4s ease;
 
   &.legendary {
     background-image: url("~/assets/image/card-gold.png");
@@ -77,10 +78,9 @@ const border = computed(() => {
     width: 100%;
     height: 100%;
   }
+}
 
-  .hero-card-border:hover {
-    transform: translate3D(0, -1px, 0) scale(1.03);
-    transition: all 0.4s ease;
-  }
+.hero-card:hover {
+  transform: scale(1.1);
 }
 </style>

@@ -1,7 +1,10 @@
 <template>
-  <div class="gallery">
-    <div v-for="hero in sortByRarity(heroes)">
-      <HeroCard :hero="hero" />
+  <div class="gallery-page">
+    <h1>Heroes</h1>
+    <div class="gallery">
+      <div v-for="hero in sortByRarity(heroes)">
+        <HeroCard :hero="hero" />
+      </div>
     </div>
   </div>
 </template>
@@ -29,9 +32,13 @@ const sortByRarity = () => {
 </script>
 
 <style lang="scss">
-.gallery {
-  display: grid;
-  grid-gap: 2em;
-  grid-template-columns: repeat(auto-fit, 122px);
+.gallery-page {
+  width: 100%;
+  .gallery {
+    margin-top: 3rem;
+    display: grid;
+    grid-gap: 3em;
+    grid-template-columns: repeat(auto-fit, 12.2rem);
+  }
 }
 </style>

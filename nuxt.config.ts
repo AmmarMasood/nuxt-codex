@@ -4,6 +4,6 @@ export default defineNuxtConfig({
   alias: {
     '@': resolve(__dirname, '/'),
   },
-  css: ['~/assets/main.scss'],
+  css: ['~/assets/reset.scss','~/assets/main.scss'],
   devtools: { enabled: true }
 })
