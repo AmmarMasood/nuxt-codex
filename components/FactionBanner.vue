@@ -1,5 +1,6 @@
 <template>
-  <div class="faction-banner">
+  <div class="faction-banner" :class="{ lord: isLord }">
+    <img class="lord-frame" v-if="isLord" src="~/assets/image/lord-frame.png" />
     <img v-for="faction in factions" :src="getImage(faction.name)" />
   </div>
 </template>
@@ -9,6 +10,11 @@ const props = defineProps({
   factions: {
     type: Object,
     required: true,
+  },
+  isLord: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
 });
 
@@ -37,8 +43,19 @@ const getImage = (name) => {
   flex-direction: column;
   gap: 0.5rem;
 
+  &.lord {
+    top: 2rem;
+  }
+
   img {
     max-height: 4rem;
+
+    &.lord-frame {
+      position: absolute;
+      min-height: 6.5rem;
+      top: -2rem;
+      left: -0.3rem;
+    }
   }
 }
 </style>
