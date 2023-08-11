@@ -15,6 +15,12 @@
           {{ faction.name }}
         </option>
       </select>
+      <select id="class" v-model="classFilter">
+        <option value="" selected>Select class...</option>
+        <option :value="heroClass.name" v-for="heroClass in heroClasses">
+          {{ heroClass.name }}
+        </option>
+      </select>
     </div>
     <div class="gallery">
       <div v-for="hero in filteredHeroes">
@@ -36,10 +42,12 @@ const rarities = {
 
 const heroes = await $fetch("/api/heroes");
 const factions = await $fetch("/api/factions");
+const heroClasses = await $fetch("/api/classes");
 
 const searchTerm = ref("");
 const maxLevel = ref(false);
 const factionFilter = ref("");
+const classFilter = ref("");
 
 const filteredHeroes = computed(() => {
   let sortedHeroes = heroes;
@@ -53,6 +61,12 @@ const filteredHeroes = computed(() => {
       return hero.factions.some((faction) => {
         return faction.name === factionFilter.value;
       });
+    });
+  }
+
+  if (classFilter.value !== "") {
+    sortedHeroes = sortedHeroes.filter((hero) => {
+      return hero.class === classFilter.value;
     });
   }
 
