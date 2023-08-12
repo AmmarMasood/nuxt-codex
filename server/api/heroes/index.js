@@ -1,5 +1,4 @@
 export default defineEventHandler(async () => {
-
   try {
     const response = await fetch(`${process.env.BACKEND_URL}/heroes?populate=*&pagination[pageSize]=300`, {
       headers: {
@@ -11,6 +10,7 @@ export default defineEventHandler(async () => {
 
     const heroes = body.data.map((item) => {
       return {
+        slug: item.attributes.slug,
         name: item.attributes.name,
         isLord: item.attributes.isLord,
         isRanged: item.attributes.ranged,
