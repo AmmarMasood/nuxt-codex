@@ -59,7 +59,6 @@ const heroTracker = ref([]);
 
 onMounted(() => {
   if (pityStore.rarePity) {
-    console.log(pityStore.rarePity);
     heroTracker.value = pityStore.rarePity.tracker;
     trackerCount.value = pityStore.rarePity.currentCount;
     currentCount.value = trackerCount.value;
