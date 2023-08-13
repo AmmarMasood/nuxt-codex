@@ -7,6 +7,9 @@
     <p><strong>Description:</strong> {{ hero.description }}</p>
     <p><strong>Rarity:</strong> {{ hero.rarity }}</p>
     <p><strong>Class:</strong> {{ hero.class }}</p>
+    <p>
+      <strong>{{ factionLabel }}:</strong> {{ factions }}
+    </p>
     <p><strong>Tags:</strong> {{ hero.tags.join(", ") }}</p>
     <br />
     <br />
@@ -77,9 +80,24 @@ const attackRange = computed(() => {
   if (maxLevel.value) {
     return hero.value.maxAttackRange;
   }
-  console.log(hero.value.maxAttackRange);
 
   return hero.value.baseAttackRange;
+});
+
+const factionLabel = computed(() => {
+  if (hero.value.factions.length > 1) {
+    return "Factions";
+  }
+
+  return "Faction";
+});
+
+const factions = computed(() => {
+  const mapped = hero.value.factions.map((faction) => {
+    return faction.shortName;
+  });
+
+  return mapped.join(", ");
 });
 </script>
 
