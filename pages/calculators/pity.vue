@@ -10,7 +10,10 @@
             : baseChanceLegendary * 100
         }}%
       </li>
-      <li>Current Legendary chance: {{ currentLegendaryChance * 100 }}%</li>
+      <li>
+        Current Legendary chance:
+        {{ Math.round(currentLegendaryChance * 100) }}%
+      </li>
     </ul>
     <label for="event">2x event</label>
     <input type="checkbox" id="event" v-model="eventActive" /><br />
