@@ -14,6 +14,7 @@
         Current Legendary chance:
         {{ Math.round(currentLegendaryChance * 100) }}%
       </li>
+      <li>Pity count starts in: {{ pityCountStart }} pulls</li>
       <li>Guaranteed legendary in: {{ guaranteedCount }} pulls</li>
     </ul>
     <label for="event">2x event</label>
@@ -33,8 +34,9 @@
     <input type="number" min="0" v-model="trackerCount" />
     <button type="button" @click="addHero">Add</button>
     <ul>
-      <li v-for="tracked in heroTracker">
+      <li v-for="(tracked, index) in heroTracker">
         Pulled {{ tracked.hero }} at pull number {{ tracked.count }}
+        <button type="button" @click="remove(index)">Remove</button>
       </li>
     </ul>
   </div>
@@ -65,9 +67,23 @@ onMounted(() => {
   }
 });
 
+const pityCountStart = computed(() => {
+  const count = 200 - resetCount.value;
+  return count > 200 ? 200 : count;
+});
+
 const guaranteedCount = computed(() => {
   const count = 220 - resetCount.value;
-  return count < 0 ? 0 : count;
+
+  if (count < 0) {
+    return 0;
+  }
+
+  if (count > 220) {
+    return 220;
+  }
+
+  return count;
 });
 
 const resetCount = computed(() => {
@@ -88,12 +104,23 @@ const currentLegendaryChance = computed(() => {
   return baseChanceLegendary;
 });
 
+const remove = (index) => {
+  if (index > -1) {
+    heroTracker.value.splice(index, 1);
+    pityStore.rarePity.tracker = heroTracker.value;
+  }
+};
+
 const addHero = () => {
   if (trackerCount.value <= 0) {
     return;
   }
 
   if (trackerHero.value === "") {
+    return;
+  }
+
+  if (heroTracker.value && trackerCount.value < heroTracker.value[0]?.count) {
     return;
   }
 
