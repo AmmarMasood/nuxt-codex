@@ -1,13 +1,30 @@
 import { defineStore } from 'pinia'
 
-export const useFactionStore = defineStore('faction', () => {
-  const factions = ref([])
+export const useFactionStore = defineStore('factions', {
+  state: () => ({
+    factions: [],
+  }),
+  actions: {
+    async getFaction(name) {
+      if (!this.factions.length > 0) {
+        await this.fetchFactions()
+      }
 
-  async function getFaction(name) {
-    return factions.value.find((item) => {
-      return item.name === name
-    })
-  }
+      return this.factions.find((item) => {
+        return item.name === name
+      })
+    },
+    async getFactions() {
+      if (this.factions.length > 0) {
+        return this.factions
+      }
 
-  return { factions, getFaction }
-})
+      await this.fetchFactions()
+      return this.factions
+    },
+    async fetchFactions() {
+      const { data: factionsList } = await useFetch('/api/factions')
+      this.factions = factionsList.value
+    }
+  },
+});

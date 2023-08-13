@@ -1,8 +1,19 @@
 <template>
   <div>
     <h2>Start</h2>
-    <NuxtLink to="/heroes">Heroes</NuxtLink>
+    <ul>
+      <li>
+        <NuxtLink to="/heroes">Heroes</NuxtLink>
+      </li>
+      <li>
+        <NuxtLink to="/artifacts">Artifacts</NuxtLink>
+      </li>
+    </ul>
   </div>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+li {
+  font-size: 2rem;
+}
+</style>

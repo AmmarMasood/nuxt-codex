@@ -9,14 +9,16 @@
       />
       <input type="checkbox" v-model="maxLevel" id="maxLevel" />
       <label for="maxLevel">Max Level</label>
+      <label for="faction">Faction</label>
       <select id="faction" v-model="factionFilter">
-        <option value="" selected>Select faction...</option>
+        <option value="" selected>All</option>
         <option :value="faction.name" v-for="faction in factions">
           {{ faction.name }}
         </option>
       </select>
-      <select id="class" v-model="classFilter">
-        <option value="" selected>Select class...</option>
+      <label for="heroClass">Class</label>
+      <select id="heroClass" v-model="classFilter">
+        <option value="" selected>All</option>
         <option :value="heroClass.name" v-for="heroClass in heroClasses">
           {{ heroClass.name }}
         </option>
@@ -34,7 +36,12 @@
 
 <script setup>
 import { useHeroStore } from "~/stores/heroStore";
+import { useFactionStore } from "~/stores/factionStore";
+import { useClassStore } from "~/stores/classStore";
+
 const heroStore = useHeroStore();
+const factionStore = useFactionStore();
+const classStore = useClassStore();
 
 const rarities = {
   Legendary: 1,
@@ -45,8 +52,8 @@ const rarities = {
 };
 
 const heroes = ref(await heroStore.getHeroes());
-const { data: factions } = await useFetch("/api/factions");
-const { data: heroClasses } = await useFetch("/api/classes");
+const factions = ref(await factionStore.getFactions());
+const heroClasses = ref(await classStore.getClasses());
 
 const searchTerm = ref("");
 const maxLevel = ref(false);
