@@ -5,13 +5,13 @@ export const useArtifactsStore = defineStore('artifacts', {
     artifacts: [],
   }),
   actions: {
-    async getArtifact(name) {
+    async getArtifact(slug) {
       if (!this.artifacts.length > 0) {
         await this.fetchArtifacts()
       }
 
       return this.artifacts.find((item) => {
-        return item.name === name
+        return item.slug === slug
       })
     },
     async getArtifacts() {

@@ -15,7 +15,7 @@ export default defineEventHandler(async () => {
         rarity: item.attributes.rarity,
         hero: undefined,
         class: undefined,
-        levels: item.attributes.levels,
+        levels: item.attributes.Levels,
         image: ''
       }
 
