@@ -20,6 +20,8 @@ export default defineEventHandler(async () => {
         rarity: item.attributes.rarity?.data.attributes.name,
         damageType: item.attributes.damageType?.data.attributes.name,
         image: item.attributes.image?.data.attributes.url,
+        baseAttackRange: item.attributes.baseAttackRange.data?.attributes.url,
+        maxAttackRange: item.attributes.maxAttackRange.data?.attributes.url,
         factions: item.attributes.factions.data.map((faction) => {
           return {
             name: faction.attributes.name,

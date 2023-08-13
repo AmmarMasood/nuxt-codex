@@ -3,22 +3,12 @@
     <h2>Pity tracker</h2>
     <ul>
       <li>
-        Legendary base chance:
-        {{
-          eventActive
-            ? baseChanceLegendary * 2 * 100
-            : baseChanceLegendary * 100
-        }}%
-      </li>
-      <li>
         Current Legendary chance:
         {{ Math.round(currentLegendaryChance * 100) }}%
       </li>
       <li>Pity count starts in: {{ pityCountStart }} pulls</li>
       <li>Guaranteed legendary in: {{ guaranteedCount }} pulls</li>
     </ul>
-    <label for="event">2x event</label>
-    <input type="checkbox" id="event" v-model="eventActive" /><br />
     <label for="currentRareCount">Current count</label>
     <input type="number" v-model="currentCount" min="0" /><br />
     <br />
@@ -69,6 +59,11 @@ onMounted(() => {
 
 const pityCountStart = computed(() => {
   const count = 200 - resetCount.value;
+
+  if (count < 0) {
+    return 0;
+  }
+
   return count > 200 ? 200 : count;
 });
 
