@@ -34,7 +34,7 @@
     <button type="button" @click="addHero">Add</button>
     <ul>
       <li v-for="tracked in heroTracker">
-        {{ tracked.hero }} at pull {{ tracked.count }}
+        Pulled {{ tracked.hero }} at pull number {{ tracked.count }}
       </li>
     </ul>
   </div>
@@ -42,8 +42,10 @@
 
 <script setup>
 import { useHeroStore } from "~/stores/heroStore";
+import { usePityStore } from "~/stores/pityStore";
 
 const heroStore = useHeroStore();
+const pityStore = usePityStore();
 
 const baseChanceLegendary = 0.01;
 const pityBonus = 0.05;
@@ -54,6 +56,15 @@ const currentCount = ref(0);
 const trackerHero = ref("");
 const trackerCount = ref(0);
 const heroTracker = ref([]);
+
+onMounted(() => {
+  if (pityStore.rarePity) {
+    console.log(pityStore.rarePity);
+    heroTracker.value = pityStore.rarePity.tracker;
+    trackerCount.value = pityStore.rarePity.currentCount;
+    currentCount.value = trackerCount.value;
+  }
+});
 
 const guaranteedCount = computed(() => {
   const count = 220 - resetCount.value;
@@ -98,6 +109,11 @@ const addHero = () => {
 
   trackerHero.value = "";
   trackerCount.value = currentCount.value;
+
+  pityStore.rarePity = {
+    tracker: heroTracker.value,
+    currentCount: currentCount.value,
+  };
 };
 </script>
 

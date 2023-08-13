@@ -5,7 +5,7 @@ export const useClassStore = defineStore('classes', {
     classes: [],
   }),
   actions: {
-    async getClasses(name) {
+    async getClass(name) {
       if (!this.classes.length > 0) {
         await this.fetchClasses()
       }
