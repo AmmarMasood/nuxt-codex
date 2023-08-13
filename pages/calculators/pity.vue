@@ -48,7 +48,7 @@ const heroStore = useHeroStore();
 const baseChanceLegendary = 0.01;
 const pityBonus = 0.05;
 
-const heroes = ref(await heroStore.getHeroes());
+const heroes = ref(await heroStore.getLegendaryHeroes());
 const eventActive = ref(false);
 const currentCount = ref(0);
 const trackerHero = ref("");
@@ -85,6 +85,10 @@ const addHero = () => {
 
   if (trackerHero.value === "") {
     return;
+  }
+
+  if (currentCount.value < trackerCount.value) {
+    currentCount.value = trackerCount.value;
   }
 
   heroTracker.value.unshift({

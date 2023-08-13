@@ -22,6 +22,19 @@ export const useHeroStore = defineStore('heroes', {
       await this.fetchHeroes()
       return this.heroes
     },
+    async getLegendaryHeroes() {
+      if (!this.heroes.length > 0) {
+        await this.fetchHeroes()
+      }
+
+      const filtered = this.heroes.filter((hero) => {
+        return hero.rarity === 'Legendary'
+      })
+
+      return filtered.sort((a, b) => {
+        return a.name.localeCompare(b.name);
+      })
+    },
     async fetchHeroes() {
       const { data: heroesList } = await useFetch('/api/heroes')
       this.heroes = heroesList.value
