@@ -4,6 +4,10 @@
       class="artifact-card-border"
       src="~/assets/image/artifact-card-frame.png"
     />
+    <ClassBanner
+      v-if="props.artifact.class"
+      :heroClass="props.artifact.class"
+    />
     <img
       v-if="props.artifact.image !== ''"
       class="artifact-card-image"
