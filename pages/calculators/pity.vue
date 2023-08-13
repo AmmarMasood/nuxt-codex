@@ -72,7 +72,7 @@ const currentLegendaryChance = computed(() => {
 });
 
 const addHero = () => {
-  if (trackerCount.value < currentCount.value) {
+  if (trackerCount.value <= 0) {
     return;
   }
 
