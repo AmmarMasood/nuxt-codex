@@ -11,7 +11,7 @@
     <img
       v-if="props.artifact.image !== ''"
       class="artifact-card-image"
-      :src="`${imageUrl}/${props.artifact.image}`"
+      :src="props.artifact.image"
       :alt="`Image of the ${artifact.name} artifact`"
     />
   </div>
@@ -24,9 +24,7 @@ const props = defineProps({
     required: true,
   },
 });
-const imageUrl = computed(() => {
-  return process.env.IMAGE_URL;
-});
+
 const rarity = computed(() => {
   return props.artifact.rarity.toLowerCase();
 });

@@ -28,8 +28,8 @@ export default defineEventHandler(async () => {
       }
 
       if (item.attributes.image.data) {
-        const image = item.attributes.image.data[0].attributes
-        mappedItem.image = image.hash + image.ext
+        const image =  item.attributes.image.data[0].attributes
+        mappedItem.image = process.env.IMAGE_URL + '/' + image.hash + image.ext
       }
 
       return mappedItem

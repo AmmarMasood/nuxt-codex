@@ -14,11 +14,12 @@
         Current Legendary chance:
         {{ Math.round(currentLegendaryChance * 100) }}%
       </li>
+      <li>Guaranteed legendary in: {{ guaranteedCount }} pulls</li>
     </ul>
     <label for="event">2x event</label>
     <input type="checkbox" id="event" v-model="eventActive" /><br />
     <label for="currentRareCount">Current count</label>
-    <input type="number" v-model="currentCount" /><br />
+    <input type="number" v-model="currentCount" min="0" /><br />
     <br />
     <h3>Hero tracker</h3>
     <label for="heroes">Got hero</label>
@@ -29,7 +30,7 @@
       </option>
     </select>
     <label for="trackerCount">At pull</label>
-    <input type="number" v-model="trackerCount" />
+    <input type="number" min="0" v-model="trackerCount" />
     <button type="button" @click="addHero">Add</button>
     <ul>
       <li v-for="tracked in heroTracker">
@@ -54,6 +55,11 @@ const trackerHero = ref("");
 const trackerCount = ref(0);
 const heroTracker = ref([]);
 
+const guaranteedCount = computed(() => {
+  const count = 220 - resetCount.value;
+  return count < 0 ? 0 : count;
+});
+
 const resetCount = computed(() => {
   if (heroTracker.value.length > 0) {
     return currentCount.value - heroTracker.value[0].count;
@@ -65,7 +71,8 @@ const resetCount = computed(() => {
 const currentLegendaryChance = computed(() => {
   if (resetCount.value > 200) {
     const bonus = pityBonus * (resetCount.value - 200);
-    return (baseChanceLegendary + bonus).toFixed(2);
+    const chance = (baseChanceLegendary + bonus).toFixed(2);
+    return chance > 1 ? 1 : chance;
   }
 
   return baseChanceLegendary;
