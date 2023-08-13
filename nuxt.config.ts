@@ -7,9 +7,4 @@ export default defineNuxtConfig({
   modules: ['@pinia/nuxt'],
   css: ['~/assets/reset.scss','~/assets/main.scss'],
   devtools: { enabled: true },
-  nitro: {
-    routeRules: {
-      '/api/**': { cors: false },
-    }
-  }
 })

@@ -8,6 +8,9 @@
       <li>
         <NuxtLink to="/artifacts">Artifacts</NuxtLink>
       </li>
+      <li>
+        <NuxtLink to="/calculators">Calculators</NuxtLink>
+      </li>
     </ul>
   </div>
 </template>
