@@ -12,8 +12,8 @@ export default defineEventHandler(async () => {
       const startDateTime = new Date(event.attributes.start);
       const endDateTime = new Date(event.attributes.end);
 
-      startDateTime.setHours(9, 0, 0, 0);
-      endDateTime.setHours(9, 0, 0, 0);
+      startDateTime.setHours(8, 0, 0, 0);
+      endDateTime.setHours(8, 0, 0, 0);
       endDateTime.setDate(endDateTime.getDate() + 1);
 
       return {
@@ -21,7 +21,8 @@ export default defineEventHandler(async () => {
         description: event.attributes.description,
         image: event.attributes.image?.data.attributes.url,
         start: Math.floor(startDateTime.getTime() / 1000),
-        end: Math.floor(endDateTime.getTime() / 1000)
+        end: Math.floor(endDateTime.getTime() / 1000),
+        localTime: new Date().toISOString()
       };
     });
 

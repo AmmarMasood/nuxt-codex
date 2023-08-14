@@ -5,11 +5,15 @@
     <p>{{ props.description }}</p>
     <br />
     <p>{{ countdownText }}</p>
+    <p>{{ props.localTime }}</p>
   </div>
 </template>
 
 <script setup>
 const props = defineProps({
+  localTime: {
+    type: String,
+  },
   image: {
     type: String,
   },
