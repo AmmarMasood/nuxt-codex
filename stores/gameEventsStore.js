@@ -17,11 +17,19 @@ export const useGameEventsStore = defineStore('gameEvents', {
       const { data: eventsList } = await useFetch('/api/game-events')
 
       if (eventsList.value) {
+        const todayDateTime = new Date();
+
+        // Adjust the current time to 10:00 am if it's before 10:00 am
+        if (todayDateTime.getHours() < 10) {
+          todayDateTime.setHours(10, 0, 0, 0);
+        }
+
+        const today = Math.floor(todayDateTime.getTime() / 1000);
+
         this.events = eventsList.value.filter((event) => {
-          const today = new Date().toISOString().split('T')[0]
-          return event.end >= today
-        })
+          return event.end >= today;
+        });
       }
     }
-  },
+  }
 });

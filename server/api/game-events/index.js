@@ -9,14 +9,21 @@ export default defineEventHandler(async () => {
 
     const body = await response.json()
     const events = body.data.map((event) => {
+      const startDateTime = new Date(event.attributes.start);
+      const endDateTime = new Date(event.attributes.end);
+
+      startDateTime.setHours(10, 0, 0, 0);
+      endDateTime.setHours(10, 0, 0, 0);
+      endDateTime.setDate(endDateTime.getDate() + 1);
+
       return {
         name: event.attributes.name,
         description: event.attributes.description,
         image: event.attributes.image?.data.attributes.url,
-        start: event.attributes.start,
-        end: event.attributes.end
-      }
-    })
+        start: Math.floor(startDateTime.getTime() / 1000),
+        end: Math.floor(endDateTime.getTime() / 1000)
+      };
+    });
 
     return events
   } catch (e) {

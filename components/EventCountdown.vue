@@ -22,72 +22,42 @@ const props = defineProps({
     required: true,
   },
   start: {
-    type: String,
+    type: Number,
     required: true,
   },
   end: {
-    type: String,
+    type: Number,
     required: true,
   },
 });
 
-const currentTime = new Date();
+const countdownText = ref("");
 
-const eventStartTime = new Date(props.start);
-eventStartTime.setHours(10, 0, 0, 0);
-
-const tomorrowAt10AM = new Date(currentTime);
-tomorrowAt10AM.setDate(tomorrowAt10AM.getDate() + 1);
-tomorrowAt10AM.setHours(10, 0, 0, 0);
-
-const countdown = ref({
-  days: 0,
-  hours: 0,
-  minutes: 0,
-  seconds: 0,
-});
-
-const countdownInterval = setInterval(updateCountdown, 1000);
-
-function updateCountdown() {
-  const now = new Date();
-
-  if (now < eventStartTime) {
-    const timeDiff = eventStartTime - now;
-    updateCountdownValues(timeDiff);
-  } else if (now < tomorrowAt10AM) {
-    const timeDiff = tomorrowAt10AM - now;
-    updateCountdownValues(timeDiff);
+const updateCountdown = () => {
+  const currentTime = Math.floor(Date.now() / 1000);
+  if (currentTime < props.start) {
+    const timeUntilStart = props.start - currentTime;
+    countdownText.value = `Event starts in ${formatTime(timeUntilStart)}`;
+  } else if (currentTime < props.end) {
+    const timeUntilEnd = props.end - currentTime;
+    countdownText.value = `Event ends in ${formatTime(timeUntilEnd)}`;
   } else {
-    clearInterval(countdownInterval);
+    countdownText.value = "Event has ended";
   }
-}
+};
 
-function updateCountdownValues(timeDiff) {
-  countdown.value.days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-  countdown.value.hours = Math.floor(
-    (timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-  );
-  countdown.value.minutes = Math.floor(
-    (timeDiff % (1000 * 60 * 60)) / (1000 * 60)
-  );
-  countdown.value.seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-}
+const formatTime = (timeInSeconds) => {
+  const days = Math.floor(timeInSeconds / 86400);
+  const hours = Math.floor((timeInSeconds % 86400) / 3600);
+  const minutes = Math.floor((timeInSeconds % 3600) / 60);
+  const seconds = timeInSeconds % 60;
 
-const countdownText = computed(() => {
-  if (currentTime < eventStartTime) {
-    return `${countdown.value.days} days ${countdown.value.hours} hours ${countdown.value.minutes} minutes ${countdown.value.seconds} seconds until the event starts`;
-  } else if (currentTime < tomorrowAt10AM) {
-    return `${countdown.value.days} days ${countdown.value.hours} hours ${countdown.value.minutes} minutes ${countdown.value.seconds} seconds until the event ends`;
-  }
-});
+  return `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`;
+};
 
 onMounted(() => {
   updateCountdown();
-});
-
-onBeforeUnmount(() => {
-  clearInterval(countdownInterval);
+  setInterval(updateCountdown, 1000);
 });
 </script>
 
