@@ -12,8 +12,8 @@ export default defineEventHandler(async () => {
       const startDateTime = new Date(event.attributes.start);
       const endDateTime = new Date(event.attributes.end);
 
-      startDateTime.setHours(10, 0, 0, 0);
-      endDateTime.setHours(10, 0, 0, 0);
+      startDateTime.setHours(9, 0, 0, 0);
+      endDateTime.setHours(9, 0, 0, 0);
       endDateTime.setDate(endDateTime.getDate() + 1);
 
       return {
