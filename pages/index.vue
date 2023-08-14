@@ -19,7 +19,6 @@
       :description="event.description"
       :start="event.start"
       :end="event.end"
-      :localTime="event.localTime"
     />
   </div>
 </template>

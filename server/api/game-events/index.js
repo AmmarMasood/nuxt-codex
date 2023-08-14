@@ -21,8 +21,7 @@ export default defineEventHandler(async () => {
         description: event.attributes.description,
         image: event.attributes.image?.data.attributes.url,
         start: Math.floor(startDateTime.getTime() / 1000),
-        end: Math.floor(endDateTime.getTime() / 1000),
-        localTime: new Date().toISOString()
+        end: Math.floor(endDateTime.getTime() / 1000)
       };
     });
 

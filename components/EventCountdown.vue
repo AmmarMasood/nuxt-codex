@@ -5,7 +5,6 @@
     <p>{{ props.description }}</p>
     <br />
     <p>{{ countdownText }}</p>
-    <p>{{ props.localTime }}</p>
   </div>
 </template>
 
