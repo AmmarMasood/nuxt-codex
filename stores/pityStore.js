@@ -2,7 +2,8 @@ import { defineStore } from 'pinia'
 
 export const usePityStore = defineStore('pity', {
   state: () => ({
-    rarePity: null,
+    rare: null,
+    legendary: null
   }),
   persist: {
     storage: persistedState.localStorage,

@@ -9,7 +9,7 @@
         <NuxtLink to="/artifacts">Artifacts</NuxtLink>
       </li>
       <li>
-        <NuxtLink to="/calculators">Calculators</NuxtLink>
+        <NuxtLink to="/tools">Tools</NuxtLink>
       </li>
     </ul>
     <EventCountdown

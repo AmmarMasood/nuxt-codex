@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h2>Calculators</h2>
+    <h2>Tools</h2>
     <ul>
       <li>
-        <NuxtLink to="/calculators/pity">Pity Tracker</NuxtLink>
+        <NuxtLink to="/tools/pity">Pity Tracker</NuxtLink>
       </li>
     </ul>
   </div>

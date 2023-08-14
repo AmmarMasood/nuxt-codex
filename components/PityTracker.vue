@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h2>Pity tracker</h2>
+    <img :src="props.image" />
+    <h3>{{ props.title }}</h3>
     <ul>
       <li>
         Current Legendary chance:
@@ -39,43 +40,76 @@ import { usePityStore } from "~/stores/pityStore";
 const heroStore = useHeroStore();
 const pityStore = usePityStore();
 
-const baseChanceLegendary = 0.01;
-const pityBonus = 0.05;
+const props = defineProps({
+  title: {
+    type: String,
+    required: true,
+  },
+  image: {
+    type: String,
+    required: true,
+  },
+  baseChanceLegendary: {
+    type: Number,
+    required: true,
+  },
+  guaranteedCount: {
+    type: Number,
+    required: true,
+  },
+  pityBonus: {
+    type: Number,
+    required: true,
+  },
+  basePityCount: {
+    type: Number,
+    required: true,
+  },
+  pityType: {
+    type: String,
+    required: true,
+  },
+});
 
 const heroes = ref(await heroStore.getLegendaryHeroes());
-const eventActive = ref(false);
 const currentCount = ref(0);
 const trackerHero = ref("");
 const trackerCount = ref(0);
 const heroTracker = ref([]);
 
+const pityStores = {
+  legendary: pityStore.legendary,
+  rare: pityStore.rare,
+};
+
 onMounted(() => {
-  if (pityStore.rarePity) {
-    heroTracker.value = pityStore.rarePity.tracker;
-    trackerCount.value = pityStore.rarePity.currentCount;
+  if (pityStores[props.pityType]) {
+    const store = pityStores[props.pityType];
+    heroTracker.value = store.tracker;
+    trackerCount.value = store.currentCount;
     currentCount.value = trackerCount.value;
   }
 });
 
 const pityCountStart = computed(() => {
-  const count = 200 - resetCount.value;
+  const count = props.basePityCount - resetCount.value;
 
   if (count < 0) {
     return 0;
   }
 
-  return count > 200 ? 200 : count;
+  return count > props.basePityCount ? props.basePityCount : count;
 });
 
 const guaranteedCount = computed(() => {
-  const count = 220 - resetCount.value;
+  const count = props.guaranteedCount - resetCount.value;
 
   if (count < 0) {
     return 0;
   }
 
-  if (count > 220) {
-    return 220;
+  if (count > props.guaranteedCount) {
+    return props.guaranteedCount;
   }
 
   return count;
@@ -90,19 +124,19 @@ const resetCount = computed(() => {
 });
 
 const currentLegendaryChance = computed(() => {
-  if (resetCount.value > 200) {
-    const bonus = pityBonus * (resetCount.value - 200);
-    const chance = (baseChanceLegendary + bonus).toFixed(2);
+  if (resetCount.value > props.basePityCount) {
+    const bonus = props.pityBonus * (resetCount.value - props.basePityCount);
+    const chance = (props.baseChanceLegendary + bonus).toFixed(2);
     return chance > 1 ? 1 : chance;
   }
 
-  return baseChanceLegendary;
+  return props.baseChanceLegendary;
 });
 
 const remove = (index) => {
   if (index > -1) {
     heroTracker.value.splice(index, 1);
-    pityStore.rarePity.tracker = heroTracker.value;
+    pityStore[props.pityType].tracker = heroTracker.value;
   }
 };
 
@@ -131,7 +165,7 @@ const addHero = () => {
   trackerHero.value = "";
   trackerCount.value = currentCount.value;
 
-  pityStore.rarePity = {
+  pityStore[props.pityType] = {
     tracker: heroTracker.value,
     currentCount: currentCount.value,
   };
