@@ -7,4 +7,7 @@ export default defineNuxtConfig({
   modules: ['@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt'],
   css: ['~/assets/reset.scss','~/assets/main.scss'],
   devtools: { enabled: true },
+  serverMiddleware: [
+    { path: '/api', handler: '~/middleware/block-external.js' }
+  ]
 })
