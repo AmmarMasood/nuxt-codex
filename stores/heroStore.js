@@ -20,7 +20,9 @@ export const useHeroStore = defineStore('heroes', {
       }
 
       await this.fetchHeroes()
-      return this.heroes
+      return this.heroes.sort((a, b) => {
+        return a.name.localeCompare(b.name)
+      })
     },
     async getLegendaryHeroes() {
       if (!this.heroes.length > 0) {
@@ -37,6 +39,7 @@ export const useHeroStore = defineStore('heroes', {
     },
     async fetchHeroes() {
       const { data: heroesList } = await useFetch('/api/heroes')
+
       this.heroes = heroesList.value
     }
   },
