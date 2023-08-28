@@ -19,6 +19,7 @@ const props = defineProps({
 });
 
 const images = {
+  "the chaos dominion": "/image/the-chaos-dominion.png",
   "the cursed cult": "/image/the-cursed-cult.png",
   "the esoteria order": "/image/the-esoteria-order.png",
   "the infernal blast": "/image/the-infernal-blast.png",
