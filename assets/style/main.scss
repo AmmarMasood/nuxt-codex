@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Lalezar&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+$clr-primary: #f8a219;
+$clr-secondary: #1C1F26;
+$clr-secondary-dark: #2A2C35;
+$clr-white: #FFF;
+$clr-black: #1E1E1E;
+
+$ff-primary: 'Inter', sans-serif;
+
+$ff-body: $ff-primary;
+$ff-heading: 'Lalezar', cursive;
+$ff-alternative: 'Oswald', sans-serif;
+
+$fs-heading-1: 4.5rem;
+$fs-heading-2: 2.5rem;
+
+
+body {
+  background-color: $clr-black;
+  color: $clr-white;
+  font-family: $ff-body;
+}
+
+a {
+  text-decoration: none;
+  color: $clr-white;
+
+  &.active {
+    color: $clr-primary;
+  }
+}
+
+a:hover {
+  color: $clr-primary;
+}
+
+button {
+  background-color: $clr-primary;
+  border: none;
+  border-radius: 0.75rem;
+  color: $clr-black;
+  font-family: $ff-heading;
+  font-size: 1rem;
+  padding: 1.125rem 1rem 1.125rem 1rem;
+  cursor: pointer;
+}
+
+.container {
+  $max-width: 1440px;
+  $padding: 7.625rem;
+
+  width: min($max-width, 100% - ($padding * 2));
+  margin-inline: auto;
+}
