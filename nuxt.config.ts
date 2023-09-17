@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   alias: {
     '@': resolve(__dirname, '/'),
   },
-  modules: ['@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt'],
+  modules: ['@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt', 'nuxt-svgo'],
   css: ['~/assets/style/reset.scss'],
   devtools: { enabled: true },
   serverMiddleware: [
@@ -18,5 +18,8 @@ export default defineNuxtConfig({
         },
       },
     },
+  },
+  svgo: {
+    autoImportPath: '~/assets/svg/'
   }
 })

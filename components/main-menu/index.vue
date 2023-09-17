@@ -1,20 +1,21 @@
 <template>
   <header>
     <nav class="main-menu container">
-      <img class="site-logo" src="~/assets/svg/logo.svg" alt="site logo" />
-      <div class="spacer"></div>
+      <NuxtLink to="/">
+        <img class="site-logo" src="~/assets/image/logo.png" alt="site logo" />
+      </NuxtLink>
       <ul>
           <li><NuxtLink to="/">Home</NuxtLink></li>
           <li><NuxtLink to="/">News</NuxtLink></li>
           <li><NuxtLink to="/">Guides</NuxtLink></li>
           <li><NuxtLink to="/heroes">Heroes</NuxtLink></li>
           <li><NuxtLink to="/artifacts">Artifacts</NuxtLink></li>
-          <li class="dropdown">
+          <li class="dropdown" @mouseenter="toolsIsOpen = true" @mouseleave="toolsIsOpen = false">
             <button>
-              Tools <img src="~/assets/svg/arrow-down-bold.svg" />
+              Tools <SvgoArrowDownBold />
             </button>
 
-            <div class="dropdown-menu">
+            <div class="dropdown-menu" v-show="toolsIsOpen">
               <ul>
                 <li><NuxtLink to="/tools/hero-builder">Hero builder</NuxtLink></li>
                 <li><NuxtLink to="/tools/pity-tracker">Pity tracker</NuxtLink></li>
@@ -22,14 +23,13 @@
             </div>
           </li>
       </ul>
-
-      <div class="right-container">
-        <img class="search-icon" src="~/assets/svg/search.svg" alt="search icon" />
-        <button type="button">Login</button>
-      </div>
     </nav>
   </header>
 </template>
+
+<script setup>
+const toolsIsOpen = ref(false)
+</script>
 
 <style lang="scss">
 header {
@@ -40,24 +40,16 @@ header {
   font-family: $ff-heading;
   text-transform: uppercase;
   border-radius: 1em;
-  padding: 0;
+  padding: 0em;
   font-size: 1.25em;
   display: flex;
-  justify-content: space-between;
-  position: relative;
   min-height: 5em;
   align-items: center;
+  gap: 2em;
 }
 
 img.site-logo {
-  max-height: 5em;
-  position: absolute;
-  left: -0.55em;
-  top: 0;
-}
-
-img.search-icon {
-  max-width: 1.5em;
+  max-height: 4em;
 }
 
 .main-menu > ul {
@@ -80,8 +72,9 @@ img.search-icon {
     min-width: 0;
   }
 
-  img {
+  svg {
     max-height: 1.125em;
+    margin-top: 0.1em;
   }
 
   .dropdown-menu {
@@ -101,16 +94,5 @@ img.search-icon {
     }
   }
 
-}
-
-.right-container {
-  display: flex;
-  gap: 2.5em;
-
-  > button {
-    padding: 0.4em 0.75em;
-    text-transform: uppercase;
-    border-radius: 0.45em;
-  }
 }
 </style>

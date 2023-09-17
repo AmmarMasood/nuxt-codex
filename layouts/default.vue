@@ -1,29 +1,6 @@
 <template>
-  <!-- <div class="main-menu">
-    <header class="header border">
-      <div class="container">
-        Join Us
-        <ul role="list" class="social-menu">
-          <a href="https://discord.gg/44PnNQpkVF" target="_blank">
-            <img src="~/assets/svg/discord.svg" alt="discord" />
-          </a>
-        </ul>
-      </div>
-    </header>
-    <header class="header">
-      <div class="container">
-        <ul role="list">
-          <li><a href="#" class="active">Home</a></li>
-          <li><a href="#">Guides</a></li>
-          <li><a href="#">News</a></li>
-        </ul>
-      </div>
-    </header>
-  </div> -->
-
   <MainMenu />
   <slot />
-  <footer></footer>
 </template>
 
 <style lang="scss">
