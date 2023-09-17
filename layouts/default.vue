@@ -1,6 +1,7 @@
 <template>
   <MainMenu />
   <slot />
+  <Footer />
 </template>
 
 <style lang="scss">

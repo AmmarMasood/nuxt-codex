@@ -49,7 +49,7 @@ header {
 }
 
 img.site-logo {
-  max-height: 4em;
+  max-height: 5em;
 }
 
 .main-menu > ul {
