@@ -1,6 +1,6 @@
 <template>
   <MainMenu />
-  <slot />
+    <slot />
   <Footer />
 </template>
 

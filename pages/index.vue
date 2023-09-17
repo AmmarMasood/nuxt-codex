@@ -18,7 +18,7 @@
         </div>
       </div>
     </section>
-    <section class="event-timers">
+    <section class="event-timers" v-if="events.length > 0">
       <div class="container">
         <EventCountdown
           v-for="event in events"
@@ -28,6 +28,41 @@
           :start="event.start"
           :end="event.end"
         />
+      </div>
+    </section>
+    <section>
+      <div class="article-gallery-grid container">
+        <article
+          class="article-gallery-card grid-col-span-2 grid-row-span-2"
+          style="--background: url('https://picsum.photos/400/400')
+        ">
+          <ArticleCategoryBadge category="Guides" />
+          <div class="article-content">
+            <p>Lindz - 17 Sep 2023</p>
+            <h2><NuxtLink to="/">After all is said and done, more is done</NuxtLink></h2>
+          </div>
+        </article>
+        <article class="article-gallery-card" style="--background: url('https://picsum.photos/400/400')">
+          <ArticleCategoryBadge category="Articles" />
+          <div class="article-content">
+            <p>Lindz - 17 Sep 2023</p>
+            <h2><NuxtLink to="/">After all is said and done, more is done</NuxtLink></h2>
+          </div>
+        </article>
+        <article class="article-gallery-card" style="--background: url('https://picsum.photos/400/400')">
+          <ArticleCategoryBadge category="News" />
+          <div class="article-content">
+            <p>Lindz - 17 Sep 2023</p>
+            <h2><NuxtLink to="/">After all is said and done, more is done</NuxtLink></h2>
+          </div>
+        </article>
+        <article class="article-gallery-card grid-col-span-2" style="--background: url('https://picsum.photos/400/400')">
+          <ArticleCategoryBadge category="Guides" />
+          <div class="article-content">
+            <p>Lindz - 17 Sep 2023</p>
+            <h2><NuxtLink to="/">After all is said and done, more is done</NuxtLink></h2>
+          </div>
+        </article>
       </div>
     </section>
   </div>
@@ -97,6 +132,56 @@ const events = ref(await store.getEvents());
 
   .event-timers {
     margin-top: 4em;
+  }
+
+  .article-gallery-grid {
+    margin-top: 5em;
+    margin-bottom: 5em;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1em;
+    height: 35em;
+  }
+
+  .article-gallery-card {
+    background-image: var(--background);
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .article-content {
+      padding: 1em;
+      max-width: 70%;
+      background: linear-gradient(
+        0deg,
+        hsl(0, 0%, 12%, 0.6),
+        hsl(0, 0%, 12%, 0.6),
+      )
+    }
+
+    h2 {
+      font-family: $ff-alternative;
+      font-weight: 500;
+    }
+
+    &.grid-col-span-2 {
+      grid-column: span 2;
+
+      h2 {
+        font-size: 1.5em;
+      }
+    }
+
+    &.grid-row-span-2 {
+      grid-row: span 2;
+
+      h2 {
+        font-size: 2.25em;
+      }
+    }
   }
 }
 </style>
