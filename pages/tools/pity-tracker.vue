@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <h2>Pity trackers</h2>
+  <div class="container">
+    <h1>Pity trackers</h1>
     <PityTracker
       pityType="rare"
       title="Rare pity tracker"
-      image="https://wor-codex.s3.eu-west-1.amazonaws.com/rare_9ed4aa2086.png"
-      :baseChanceLegendary="0.01"
+      image="https://image.wor-codex.com/rare_9ed4aa2086.png"
+      :baseChanceLegendary="0.005"
       :pityBonus="0.05"
       :basePityCount="200"
       :guaranteedCount="220"
@@ -27,7 +27,9 @@
 <script setup></script>
 
 <style lang="scss">
-.ul {
-  font-size: 1.5rem;
+h1 {
+  font-size: 4.5em;
+  font-family: $ff-heading;
+  color: $clr-primary;
 }
 </style>

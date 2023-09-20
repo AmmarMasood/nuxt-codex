@@ -20,49 +20,17 @@
     </section>
     <section class="event-timers" v-if="events.length > 0">
       <div class="container">
-        <EventCountdown
-          v-for="event in events"
-          :image="event.image"
-          :title="event.name"
-          :description="event.description"
-          :start="event.start"
-          :end="event.end"
-        />
+        <EventCountdown v-for="event in events" :image="event.image" :title="event.name" :description="event.description"
+          :start="event.start" :end="event.end" />
       </div>
     </section>
     <section>
-      <div class="article-gallery-grid container">
-        <article
-          class="article-gallery-card grid-col-span-2 grid-row-span-2"
-          style="--background: url('https://picsum.photos/400/400')
-        ">
-          <ArticleCategoryBadge category="Guides" />
-          <div class="article-content">
-            <p>Lindz - 17 Sep 2023</p>
-            <h2><NuxtLink to="/">After all is said and done, more is done</NuxtLink></h2>
-          </div>
-        </article>
-        <article class="article-gallery-card" style="--background: url('https://picsum.photos/400/400')">
-          <ArticleCategoryBadge category="Articles" />
-          <div class="article-content">
-            <p>Lindz - 17 Sep 2023</p>
-            <h2><NuxtLink to="/">After all is said and done, more is done</NuxtLink></h2>
-          </div>
-        </article>
-        <article class="article-gallery-card" style="--background: url('https://picsum.photos/400/400')">
-          <ArticleCategoryBadge category="News" />
-          <div class="article-content">
-            <p>Lindz - 17 Sep 2023</p>
-            <h2><NuxtLink to="/">After all is said and done, more is done</NuxtLink></h2>
-          </div>
-        </article>
-        <article class="article-gallery-card grid-col-span-2" style="--background: url('https://picsum.photos/400/400')">
-          <ArticleCategoryBadge category="Guides" />
-          <div class="article-content">
-            <p>Lindz - 17 Sep 2023</p>
-            <h2><NuxtLink to="/">After all is said and done, more is done</NuxtLink></h2>
-          </div>
-        </article>
+      <ArticleFeatured />
+    </section>
+    <section class="container">
+      <div class="article-gallery">
+        <ArticleGallery :articles="latestArticles" />
+        <ArticleList :articles="articles" />
       </div>
     </section>
   </div>
@@ -72,16 +40,85 @@ import { useGameEventsStore } from "~/stores/gameEventsStore";
 const store = useGameEventsStore();
 
 const events = ref(await store.getEvents());
+const latestArticles = ref([
+  {
+    link: '#',
+    title: 'Lorem ipsum dolor sit amet consectetur',
+    excerpt: 'Praesent consectetur turpis id tellus iaculis, molestie sagittis tellus ornare. Suspendisse sed ullamcorper ex. In maximus ornare nulla, ut placerat nulla sagittis elementum',
+    thumbnail: 'https://picsum.photos/400/300',
+    publishedAt: '20 Sep 2023'
+  },
+  {
+    link: '#',
+    title: 'Lorem ipsum dolor sit amet consectetur. Purus A diam varius.',
+    excerpt: 'Vivamus rhoncus nec mauris eget blandit. Morbi accumsan sagittis nisi, tincidunt euismod ligula vulputate non. Suspendisse at mi ultricies, dapibus nulla in, tristique nunc.',
+    thumbnail: 'https://picsum.photos/500/400',
+    publishedAt: '20 Sep 2023'
+  },
+  {
+    link: '#',
+    title: 'Lorem ipsum dolor sit amet consectetur',
+    excerpt: 'Praesent consectetur turpis id tellus iaculis, molestie sagittis tellus ornare. Suspendisse sed ullamcorper ex. In maximus ornare nulla, ut placerat nulla sagittis elementum',
+    thumbnail: 'https://picsum.photos/450/300',
+    publishedAt: '20 Sep 2023'
+  },
+  {
+    link: '#',
+    title: 'Lorem ipsum dolor sit amet consectetur. Purus A diam varius.',
+    excerpt: 'Vivamus rhoncus nec mauris eget blandit. Morbi accumsan sagittis nisi, tincidunt euismod ligula vulputate non. Suspendisse at mi ultricies, dapibus nulla in, tristique nunc.',
+    thumbnail: 'https://picsum.photos/510/400',
+    publishedAt: '20 Sep 2023'
+  }
+])
+
+const articles = ref([
+  {
+    heading: 'Recent',
+    articles: [
+      {
+        link: '#',
+        title: 'Lorem ipsum dolor sit amet consectetur',
+        thumbnail: 'https://picsum.photos/200/200',
+        publishedAt: '20 Sep 2023'
+      },
+      {
+        link: '#',
+        title: 'Lorem ipsum dolor sit amet consectetur. Purus A diam varius.',
+        thumbnail: 'https://picsum.photos/100/100',
+        publishedAt: '20 Sep 2023'
+      }
+    ]
+  },
+  {
+    heading: 'Trending',
+    articles: [
+      {
+        link: '#',
+        title: 'Lorem ipsum dolor sit',
+        thumbnail: 'https://picsum.photos/150/150',
+        publishedAt: '20 Sep 2023'
+      },
+      {
+        link: '#',
+        title: 'Lorem ipsum dolor sit amet consectetur.',
+        thumbnail: 'https://picsum.photos/130/130',
+        publishedAt: '20 Sep 2023'
+      }
+    ]
+  },
+  {
+    heading: 'Most views',
+    articles: []
+  },
+])
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .landing-page {
   .hero {
-    background: linear-gradient(
-        0deg,
+    background: linear-gradient(0deg,
         hsl(213, 18%, 18%, 0.6),
-        hsl(213, 18%, 18%, 0.6)
-      ),
+        hsl(213, 18%, 18%, 0.6)),
       url("~/assets/image/bg.png") fixed;
     background-size: cover;
     background-repeat: no-repeat;
@@ -134,54 +171,10 @@ const events = ref(await store.getEvents());
     margin-top: 4em;
   }
 
-  .article-gallery-grid {
-    margin-top: 5em;
-    margin-bottom: 5em;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 1em;
-    height: 35em;
-  }
-
-  .article-gallery-card {
-    background-image: var(--background);
-    background-size: cover;
-    background-repeat: no-repeat;
-    padding: 1em;
+  .article-gallery {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    .article-content {
-      padding: 1em;
-      max-width: 70%;
-      background: linear-gradient(
-        0deg,
-        hsl(0, 0%, 12%, 0.6),
-        hsl(0, 0%, 12%, 0.6),
-      )
-    }
-
-    h2 {
-      font-family: $ff-alternative;
-      font-weight: 500;
-    }
-
-    &.grid-col-span-2 {
-      grid-column: span 2;
-
-      h2 {
-        font-size: 1.5em;
-      }
-    }
-
-    &.grid-row-span-2 {
-      grid-row: span 2;
-
-      h2 {
-        font-size: 2.25em;
-      }
-    }
+    gap: 2.5em;
+    margin-bottom: 3em;
   }
 }
 </style>

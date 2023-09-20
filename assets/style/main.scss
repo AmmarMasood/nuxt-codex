@@ -55,3 +55,21 @@ button {
   width: min($max-width, 100% - ($padding * 2));
   margin-inline: auto;
 }
+
+select {
+  padding: 0.3em 0.5em 0.3em 0.5em;
+  border-radius: 0.25em;
+  color: $clr-black;
+  font-family: $ff-body;
+  border-right: 0.5em solid transparent;
+  font-size: 1em;
+}
+
+input {
+  padding: 0.3em 0.5em 0.3em 0.5em;
+  border-radius: 0.25em;
+  color: $clr-black;
+  font-family: $ff-body;
+}
+
+

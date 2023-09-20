@@ -1,4 +1,4 @@
-export default defineEventHandler(async () => {
+export default defineEventHandler(async (event) => {
   try {
     const response = await fetch(`${process.env.BACKEND_URL}/heroes?populate=*&pagination[pageSize]=300`, {
       headers: {

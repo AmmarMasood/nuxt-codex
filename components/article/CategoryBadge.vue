@@ -1,5 +1,5 @@
 <template>
-  <div class="category-badge" :class="color">{{ category }}</div>
+  <div class="category-badge">{{ category }}</div>
 </template>
 
 <script setup>

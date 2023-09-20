@@ -1,35 +1,42 @@
 <template>
-  <div>
-    <img :src="props.image" />
-    <h3>{{ props.title }}</h3>
-    <ul>
-      <li>
-        Current Legendary chance:
-        {{ Math.round(currentLegendaryChance * 100) }}%
-      </li>
-      <li>Pity count starts in: {{ pityCountStart }} pulls</li>
-      <li>Guaranteed legendary in: {{ guaranteedCount }} pulls</li>
-    </ul>
-    <label for="currentRareCount">Current count</label>
-    <input type="number" v-model="currentCount" min="0" /><br />
-    <br />
-    <h3>Hero tracker</h3>
-    <label for="heroes">Got hero</label>
-    <select id="heroes" v-model="trackerHero">
-      <option value="" selected>Select hero...</option>
-      <option :value="hero.slug" v-for="hero in heroes">
-        {{ hero.name }}
-      </option>
-    </select>
-    <label for="trackerCount">At pull</label>
-    <input type="number" min="0" v-model="trackerCount" />
-    <button type="button" @click="addHero">Add</button>
-    <ul>
-      <li v-for="(tracked, index) in heroTracker">
-        Pulled {{ tracked.hero }} at pull number {{ tracked.count }}
-        <button type="button" @click="remove(index)">Remove</button>
-      </li>
-    </ul>
+  <div class="pity-tracker-container">
+    <header class="pity-tracker-header">
+      <h2>{{ title }}</h2>
+    </header>
+    <div class="pity-tracker-grid">
+      <label>Current legendary chance</label>
+      <ProgressBar :completed="currentLegendaryChanceProgress" :label="currentLegendaryChance * 100 + '%'" />
+      <label>Pity count starts in</label>
+      <ProgressBar :completed="pityCountProgress" :label="pityCountStart + ' ' + ' pulls'" />
+      <label>Guaranteed legendary in</label>
+      <ProgressBar :completed="guaranteedCountProgress" :label="`${guaranteedCount} pulls`" />
+      <label>Current count</label>
+      <input type="number" v-model="currentCount" />
+    </div>
+
+    <header class="pity-tracker-header">
+      <h2>Hero tracker</h2>
+    </header>
+    <div class="hero-tracker-container">
+      <label>Got hero</label>
+      <select id="heroes" v-model="trackerHero">
+        <option value="" selected>Select hero...</option>
+        <option :value="hero.slug" v-for="hero in heroes">
+          {{ hero.name }}
+        </option>
+      </select>
+      <label for="trackerCount">At pull</label>
+      <input type="number" min="0" v-model="trackerCount" />
+      <button type="button" @click="addHero">Add</button>
+      <div class="hero-tracker-list">
+        <ul>
+          <li v-for="(tracked, index) in heroTracker">
+            Pulled {{ tracked.hero }} at pull number {{ tracked.count }}
+            <button type="button" @click="remove(index)">Remove</button>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -90,6 +97,36 @@ onMounted(() => {
     currentCount.value = trackerCount.value;
   }
 });
+
+const pityCountProgress = computed(() => {
+  const count = (resetCount.value / props.basePityCount) * 100
+
+  if (count > 100) {
+    return 100
+  }
+
+  return count
+})
+
+const guaranteedCountProgress = computed(() => {
+  const count = (resetCount.value / props.guaranteedCount) * 100;
+
+  if (count > 100) {
+    return 100
+  }
+
+  return count
+})
+
+const currentLegendaryChanceProgress = computed(() => {
+  const count = currentLegendaryChance.value * 100
+
+  if (count < 1) {
+    return 0
+  }
+
+  return count
+})
 
 const pityCountStart = computed(() => {
   const count = props.basePityCount - resetCount.value;
@@ -172,8 +209,49 @@ const addHero = () => {
 };
 </script>
 
-<style lang="scss">
-.ul {
-  font-size: 1.5rem;
+<style lang="scss" scoped>
+.pity-tracker-container {
+  .pity-tracker-header {
+    display: flex;
+    font-size: 1.5em;
+    font-family: $ff-heading;
+    color: $clr-primary;
+    margin-bottom: 1em;
+    margin-top: 1em;
+  }
+
+  .pity-tracker-grid {
+    max-width: 30em;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em;
+  }
+
+  .hero-tracker-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 4fr;
+    gap: 1em;
+
+    .hero-tracker-list {
+      grid-column: 3;
+      grid-row: 1;
+      background-color: $clr-primary;
+    }
+
+    input {
+      grid-column: 2 / 2;
+    }
+
+    label {
+      grid-column: 1 / 1;
+    }
+
+    button {
+      grid-column: 2 / 2;
+      display: inline-block;
+      max-width: 5.25em;
+      padding: 0.5em;
+    }
+  }
 }
 </style>
