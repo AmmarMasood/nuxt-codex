@@ -1,12 +1,8 @@
 <template>
-  <div class="gallery-page">
+  <div class="gallery-page container">
     <h1>Heroes</h1>
     <div class="gallery-filter">
-      <input
-        type="text"
-        placeholder="Search hero name.."
-        v-model="searchTerm"
-      />
+      <input type="text" placeholder="Search hero name.." v-model="searchTerm" />
       <input type="checkbox" v-model="maxLevel" id="maxLevel" />
       <label for="maxLevel">Max Level</label>
       <label for="faction">Faction</label>
@@ -109,7 +105,7 @@ const sortByRarity = (toBeSorted) => {
     margin-top: 3rem;
     display: grid;
     grid-gap: 3em;
-    grid-template-columns: repeat(auto-fit, 12.2rem);
+    grid-template-columns: repeat(auto-fit, 10rem);
 
     p {
       font-size: 1.5rem;

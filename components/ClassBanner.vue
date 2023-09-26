@@ -27,7 +27,7 @@ const image = computed(() => {
   border-top-right-radius: 1rem;
 
   img {
-    max-height: 3.5rem;
+    max-height: 2.5em;
   }
 }
 </style>

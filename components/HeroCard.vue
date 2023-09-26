@@ -1,19 +1,12 @@
 <template>
   <div class="hero-card" :class="rarity">
     <img class="hero-card-border" :src="border" />
-    <img
-      class="hero-card-image"
-      :src="props.hero.image"
-      :alt="`Image of ${hero.name}`"
-    />
-    <FactionBanner
-      :factions="props.hero.factions"
-      :isLord="props.hero.isLord"
-    />
+    <img class="hero-card-image" :src="props.hero.image" :alt="`Image of ${hero.name}`" />
+    <FactionBanner :factions="props.hero.factions" :isLord="props.hero.isLord" />
     <ClassBanner :heroClass="props.hero.class" />
-    <div class="level" v-if="!maxLevel">lvl. 1</div>
+    <!-- <div class="level" v-if="!maxLevel">lvl. 1</div>
     <div class="level max" v-else>lvl. Max</div>
-    <StarBanner :rarity="props.hero.rarity" :maxLevel="props.maxLevel" />
+    <StarBanner :rarity="props.hero.rarity" :maxLevel="props.maxLevel" /> -->
   </div>
 </template>
 
@@ -54,8 +47,7 @@ const border = computed(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 13.5rem;
-  min-height: 20rem;
+  max-width: 9em;
   background-size: cover;
   background-repeat: no-repeat;
   transition: all 0.4s ease;
@@ -80,23 +72,19 @@ const border = computed(() => {
     background-image: url("~/assets/image/card-grey.png");
   }
 
-  .hero-card-image {
-    max-height: 95%;
-  }
-
   .hero-card-border {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    min-height: 100%;
   }
 
   .level {
     color: white;
     position: absolute;
-    font-size: 2rem;
-    bottom: 3rem;
+    font-size: 2em;
+    bottom: 3em;
 
     &.max {
       color: lightgreen;

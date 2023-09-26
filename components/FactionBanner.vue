@@ -38,24 +38,25 @@ const getImage = (name) => {
 <style lang="scss">
 .faction-banner {
   position: absolute;
-  top: 0rem;
-  left: -0.7rem;
+  top: 0em;
+  left: -0.7em;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.5em;
 
   &.lord {
-    top: 2rem;
+    top: 1em;
   }
 
   img {
-    max-height: 4rem;
+    max-height: 3em;
 
     &.lord-frame {
       position: absolute;
-      min-height: 6.5rem;
-      top: -2rem;
-      left: -0.3rem;
+      min-height: 4.5em;
+      min-width: 3.5em;
+      top: -1.3em;
+      left: -0.25em;
     }
   }
 }

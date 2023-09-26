@@ -43,15 +43,15 @@ const greyStars = getStars("grey");
 <style lang="scss">
 .star-banner {
   position: absolute;
-  left: 2.4rem;
-  bottom: 1.6rem;
+  left: 2.4em;
+  bottom: 1.6em;
   width: 100%;
 
   .stars {
     display: flex;
 
     img {
-      max-height: 1.5rem;
+      max-height: 1.5em;
     }
   }
 }
