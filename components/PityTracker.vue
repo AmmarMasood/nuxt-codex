@@ -1,41 +1,71 @@
 <template>
   <div class="pity-tracker-container">
-    <header class="pity-tracker-header">
+    <div class="pity-tracker-container--header">
       <h2>{{ title }}</h2>
-    </header>
-    <div class="pity-tracker-grid">
-      <label>Current legendary chance</label>
-      <ProgressBar :completed="currentLegendaryChanceProgress" :label="currentLegendaryChance * 100 + '%'" />
-      <label>Pity count starts in</label>
-      <ProgressBar :completed="pityCountProgress" :label="pityCountStart + ' ' + ' pulls'" />
-      <label>Guaranteed legendary in</label>
-      <ProgressBar :completed="guaranteedCountProgress" :label="`${guaranteedCount} pulls`" />
-      <label>Current count</label>
-      <input type="number" v-model="currentCount" />
+      <img :src="props.image" alt="legendary" />
+    </div>
+    <div class="pity-tracker-container--top">
+      <div>
+        <label>Current legendary chance</label>
+        <ProgressBar :completed="currentLegendaryChanceProgress" />
+        <label>{{ currentLegendaryChance * 100 + "%" }}</label>
+      </div>
+      <div>
+        <label>Pity count starts in</label>
+        <ProgressBar :completed="pityCountProgress" />
+        <label>{{ pityCountStart + " " + " Pulls" }}</label>
+      </div>
+      <div>
+        <label>Guaranteed legendary in</label>
+        <ProgressBar :completed="guaranteedCountProgress" />
+        <label>{{ `${guaranteedCount} Pulls` }}</label>
+      </div>
+      <div>
+        <label>Current count</label>
+        <NumberField v-model="currentCount" placeholder="" />
+        <label>{{ currentCount }}</label>
+      </div>
     </div>
 
-    <header class="pity-tracker-header">
+    <div class="pity-tracker-container--header" style="margin-top: 2em">
       <h2>Hero tracker</h2>
-    </header>
-    <div class="hero-tracker-container">
-      <label>Got hero</label>
-      <select id="heroes" v-model="trackerHero">
-        <option value="" selected>Select hero...</option>
-        <option :value="hero.slug" v-for="hero in heroes">
-          {{ hero.name }}
-        </option>
-      </select>
-      <label for="trackerCount">At pull</label>
-      <input type="number" min="0" v-model="trackerCount" />
-      <button type="button" @click="addHero">Add</button>
-      <div class="hero-tracker-list">
-        <ul>
-          <li v-for="(tracked, index) in heroTracker">
-            Pulled {{ tracked.hero }} at pull number {{ tracked.count }}
-            <button type="button" @click="remove(index)">Remove</button>
-          </li>
-        </ul>
+    </div>
+
+    <div class="pity-tracker-container--bottom">
+      <div>
+        <div>
+          <label>Got hero</label>
+          <Select
+            :values="heroes"
+            v-model="trackerHero"
+            topValue="Select hero..."
+          />
+        </div>
+        <div>
+          <label>At pull</label>
+          <NumberField v-model="trackerCount" placeholder="" />
+        </div>
+        <div>
+          <label></label>
+          <button
+            type="button"
+            @click="addHero"
+            style="padding: 0.5em 2em; width: fit-content"
+          >
+            Add
+          </button>
+        </div>
       </div>
+      <ul class="hero-tracker--list">
+        <li v-for="(tracked, index) in heroTracker">
+          <p>Pulled {{ tracked.hero }} at pull number {{ tracked.count }}</p>
+          <img
+            src="../assets/svg/cross.svg"
+            alt="cross-icon"
+            @click="remove(index)"
+          />
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -43,6 +73,9 @@
 <script setup>
 import { useHeroStore } from "~/stores/heroStore";
 import { usePityStore } from "~/stores/pityStore";
+import ProgressBar from "./shared/ProgressBar.vue";
+import NumberField from "./shared/NumberField.vue";
+import Select from "./shared/Select.vue";
 
 const heroStore = useHeroStore();
 const pityStore = usePityStore();
@@ -99,34 +132,34 @@ onMounted(() => {
 });
 
 const pityCountProgress = computed(() => {
-  const count = (resetCount.value / props.basePityCount) * 100
+  const count = (resetCount.value / props.basePityCount) * 100;
 
   if (count > 100) {
-    return 100
+    return 100;
   }
 
-  return count
-})
+  return count;
+});
 
 const guaranteedCountProgress = computed(() => {
   const count = (resetCount.value / props.guaranteedCount) * 100;
 
   if (count > 100) {
-    return 100
+    return 100;
   }
 
-  return count
-})
+  return count;
+});
 
 const currentLegendaryChanceProgress = computed(() => {
-  const count = currentLegendaryChance.value * 100
+  const count = currentLegendaryChance.value * 100;
 
   if (count < 1) {
-    return 0
+    return 0;
   }
 
-  return count
-})
+  return count;
+});
 
 const pityCountStart = computed(() => {
   const count = props.basePityCount - resetCount.value;
@@ -211,46 +244,99 @@ const addHero = () => {
 
 <style lang="scss" scoped>
 .pity-tracker-container {
-  .pity-tracker-header {
+  &--header {
     display: flex;
-    font-size: 1.5em;
-    font-family: $ff-heading;
-    color: $clr-primary;
-    margin-bottom: 1em;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5em;
+
+    & > h2 {
+      color: $clr-primary;
+      font-family: $ff-heading;
+      text-transform: uppercase;
+      font-size: 2em;
+    }
+  }
+
+  &--top {
     margin-top: 1em;
+
+    & > div {
+      display: grid;
+      grid-template-columns: 200px 300px 100px;
+      align-items: center;
+      margin-bottom: 1.5em;
+      grid-gap: 1em;
+
+      @include respond(tab-port) {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+      }
+
+      label {
+        color: $clr-white;
+        font-size: 1.25em;
+        font-family: $ff-alternative;
+
+        &:nth-child(3) {
+          text-align: right;
+        }
+      }
+    }
   }
 
-  .pity-tracker-grid {
-    max-width: 30em;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1em;
+  &--bottom {
+    margin-top: 1em;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 2em;
+
+    @include respond(tab-land) {
+      flex-wrap: wrap;
+    }
+
+    & > div > div {
+      display: grid;
+      grid-template-columns: 200px 300px;
+      align-items: center;
+      margin-bottom: 1.5em;
+      grid-gap: 1em;
+
+      @include respond(tab-port) {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+      }
+
+      label {
+        color: $clr-white;
+        font-size: 1.25em;
+        font-family: $ff-alternative;
+
+        &:nth-child(3) {
+          text-align: right;
+        }
+      }
+    }
   }
+}
 
-  .hero-tracker-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 4fr;
-    gap: 1em;
-
-    .hero-tracker-list {
-      grid-column: 3;
-      grid-row: 1;
+.hero-tracker {
+  &--list {
+    width: 100%;
+    & > li {
       background-color: $clr-primary;
-    }
-
-    input {
-      grid-column: 2 / 2;
-    }
-
-    label {
-      grid-column: 1 / 1;
-    }
-
-    button {
-      grid-column: 2 / 2;
-      display: inline-block;
-      max-width: 5.25em;
       padding: 0.5em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 0.25em;
+      margin-bottom: 0.5em;
+      & > p {
+        color: $clr-black;
+        font-family: $ff-alternative;
+        font-size: 1em;
+      }
     }
   }
 }

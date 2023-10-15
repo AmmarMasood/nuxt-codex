@@ -3,37 +3,54 @@
     class="article-gallery-card"
     :style="{ backgroundImage: `url(${props.background})` }"
   >
-    <ArticleCategoryBadge :category="props.category" v-if="props.category" />
-      <div class="article-content">
-      <p>{{props.date}}</p>
-      <h2><NuxtLink :to="props.link">{{props.title}}</NuxtLink></h2>
+    <ArticleCategoryBadge
+      :category="props.category"
+      :color="props.categoryColor"
+      v-if="props.category"
+    />
+
+    <div class="article-content">
+      <p>{{ props.author }}- {{ props.date }}</p>
+      <h2>
+        <NuxtLink :to="props.link">{{ props.title }}</NuxtLink>
+      </h2>
     </div>
   </article>
 </template>
 
 <script setup>
+import ArticleCategoryBadge from "../../CategoryBadge.vue";
+
 const props = defineProps({
   background: {
     type: String,
-    required: true
+    required: true,
   },
   category: {
     type: String,
-    required: false
+    required: false,
+  },
+  categoryColor: {
+    type: String,
+    required: false,
   },
   title: {
     type: String,
-    required: true
+    required: true,
   },
   link: {
     type: String,
-    required: true
+    required: true,
   },
   date: {
     type: String,
-    required: true
-  }
-})
+    required: true,
+  },
+  author: {
+    type: String,
+    required: true,
+  },
+});
 </script>
 
 <style lang="scss" scoped>
@@ -48,32 +65,43 @@ const props = defineProps({
 
   .article-content {
     padding: 1em;
-    max-width: 70%;
-    background: linear-gradient(
-      0deg,
-      hsl(0, 0%, 12%, 0.6),
-      hsl(0, 0%, 12%, 0.6),
-    )
+    max-width: 80%;
+
+    p {
+      font-size: 0.75em;
+      color: $clr-white;
+      margin-bottom: 0.5em;
+      font-family: $ff-alternative;
+    }
   }
 
   h2 {
     font-family: $ff-alternative;
     font-weight: 500;
+    font-size: 1em;
+    font-weight: 500;
+    text-transform: capitalize;
   }
+}
 
-  &.grid-col-span-2 {
-    grid-column: span 2;
-
+.article-gallery-card {
+  &--large {
     h2 {
-      font-size: 1.5em;
+      font-size: 2.5em;
+
+      @include respond(tab-port) {
+        font-size: 1em;
+      }
     }
   }
 
-  &.grid-row-span-2 {
-    grid-row: span 2;
-
+  &--medium {
     h2 {
-      font-size: 2.25em;
+      font-size: 1.65em;
+
+      @include respond(tab-port) {
+        font-size: 1em;
+      }
     }
   }
 }

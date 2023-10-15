@@ -18,6 +18,8 @@
 </template>
 
 <script setup>
+import ClassBanner from "../ClassBanner.vue";
+
 const props = defineProps({
   artifact: {
     type: Object,
@@ -37,10 +39,17 @@ const rarity = computed(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 16rem;
-  background-size: cover;
+  width: auto;
+  height: 15em;
+  max-width: 12em;
+  background-size: contain;
   background-repeat: no-repeat;
   transition: all 0.4s ease;
+
+  & > img {
+    height: 100%;
+    width: auto;
+  }
 
   &.mythic {
     background-image: url("~/assets/image/artifact-card-mythic.png");
@@ -56,10 +65,10 @@ const rarity = computed(() => {
 
   .artifact-card-border {
     position: absolute;
-    top: -0.5rem;
-    left: -0.5rem;
-    width: 110%;
-    height: 115%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
   }
 }
 

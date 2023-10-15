@@ -1,8 +1,11 @@
 <template>
   <div class="countdown-component">
+    <div class="image-container">
+      <img src="../assets/svg/obsidion.svg" alt="event image" />
+    </div>
     <div class="event-content">
       <h3>{{ props.title }}</h3>
-      {{ props.description }}
+      <p>{{ props.description }}</p>
 
       <div class="countdown-container">
         <strong>{{ countdown.text }}</strong>
@@ -48,7 +51,7 @@ const countdown = ref({
   days: 0,
   hours: 0,
   minutes: 0,
-  seconds: 0
+  seconds: 0,
 });
 
 const updateCountdown = () => {
@@ -81,17 +84,22 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .countdown-component {
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: $clr-secondary-dark;
-  border: 2px solid $clr-primary;
+  border: 3px solid $clr-primary;
   border-radius: 0.25em;
-  position:relative;
-  max-width: 50%;
+  position: relative;
   padding: 2em;
+  width: 100%;
+  padding-top: 3.5em;
+
+  @include respond(tab-port) {
+    margin-bottom: 3em;
+  }
 
   .event-content {
     display: flex;
@@ -104,6 +112,12 @@ onMounted(() => {
       font-size: 1.5em;
       font-weight: 400;
       font-family: $ff-heading;
+      text-transform: uppercase;
+    }
+
+    p {
+      font-size: 1em;
+      font-family: $ff-alternative;
     }
 
     .countdown-container {
@@ -115,17 +129,42 @@ onMounted(() => {
 
       .number-boxes {
         display: flex;
+        flex-wrap: wrap;
         gap: 1em;
         margin-top: 1em;
+
+        @include respond(tab-port) {
+          justify-content: center;
+        }
 
         .number-box {
           padding: 0.75em;
           background-color: $clr-black;
           border: 1px solid $clr-primary;
-          font-size: 1.25em;
+          font-size: 1em;
+          width: 5.5em;
+          text-align: center;
+          font-weight: 600;
+          font-family: $ff-heading;
+          text-transform: uppercase;
         }
       }
     }
+  }
+}
+
+.image-container {
+  background-color: $clr-secondary-dark;
+  border: 3px solid $clr-primary;
+  border-radius: 100%;
+  padding: 0.5em;
+
+  top: -3em;
+  position: absolute;
+
+  & > img {
+    height: 4em;
+    width: 4em;
   }
 }
 </style>

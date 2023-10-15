@@ -1,24 +1,32 @@
 <template>
-  <div class="gallery-page container">
+  <div class="gallery-page-heading">
+    <p>Home/Heroes</p>
     <h1>Heroes</h1>
+  </div>
+  <div class="gallery-page container">
     <div class="gallery-filter">
-      <input type="text" placeholder="Search hero name.." v-model="searchTerm" />
-      <input type="checkbox" v-model="maxLevel" id="maxLevel" />
-      <label for="maxLevel">Max Level</label>
-      <label for="faction">Faction</label>
-      <select id="faction" v-model="factionFilter">
-        <option value="" selected>All</option>
-        <option :value="faction.name" v-for="faction in factions">
-          {{ faction.name }}
-        </option>
-      </select>
-      <label for="heroClass">Class</label>
-      <select id="heroClass" v-model="classFilter">
-        <option value="" selected>All</option>
-        <option :value="heroClass.name" v-for="heroClass in heroClasses">
-          {{ heroClass.name }}
-        </option>
-      </select>
+      <SearchField
+        :placeholder="`Search hero name..`"
+        v-model="searchTerm"
+        class="gallery-filter--search"
+      />
+      <div class="gallery-filter--selectors">
+        <Checkbox v-model="maxLevel" label="Max Level" />
+        <Select
+          class="gallery-filter--selectors-select"
+          label="Faction"
+          :values="factions"
+          v-model="factionFilter"
+          :labelInside="true"
+        />
+        <Select
+          class="gallery-filter--selectors-select"
+          label="Class"
+          :values="heroClasses"
+          v-model="classFilter"
+          :labelInside="true"
+        />
+      </div>
     </div>
     <div class="gallery">
       <div v-for="hero in filteredHeroes">
@@ -34,6 +42,10 @@
 import { useHeroStore } from "~/stores/heroStore";
 import { useFactionStore } from "~/stores/factionStore";
 import { useClassStore } from "~/stores/classStore";
+import SearchField from "../../components/shared/SearchField.vue";
+import Checkbox from "../../components/shared/Checkbox.vue";
+import HeroCard from "../../components/heroes/HeroCard.vue";
+import Select from "../../components/shared/Select.vue";
 
 const heroStore = useHeroStore();
 const factionStore = useFactionStore();
@@ -99,17 +111,69 @@ const sortByRarity = (toBeSorted) => {
 
 <style lang="scss">
 .gallery-page {
-  width: 100%;
-
   .gallery {
-    margin-top: 3rem;
+    margin-top: 5rem;
     display: grid;
-    grid-gap: 3em;
-    grid-template-columns: repeat(auto-fit, 10rem);
+    grid-gap: 3.5em;
+    grid-template-columns: repeat(auto-fit, minmax(9.5em, 1fr));
+    justify-content: center;
+    padding-bottom: 3rem;
 
     p {
       font-size: 1.5rem;
     }
+  }
+
+  &-heading {
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    background: linear-gradient(180deg, #f8a219 0%, #efd598 100%);
+    padding: 2.5rem 0;
+
+    & > h1 {
+      font-size: 3rem;
+      text-transform: uppercase;
+      font-family: $ff-heading;
+      color: $clr-black;
+      margin: 0;
+    }
+    & > p {
+      font-size: 1rem;
+      color: $clr-black;
+      font-family: $ff-alternative;
+    }
+  }
+}
+.gallery-filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &--search {
+    width: 250px;
+  }
+
+  &--selectors {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+
+    @include respond(tab-land) {
+      margin-top: 2em;
+      flex-wrap: wrap;
+    }
+
+    &-select {
+      width: 250px;
+    }
+  }
+  @include respond(tab-land) {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 </style>

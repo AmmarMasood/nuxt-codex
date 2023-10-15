@@ -1,8 +1,14 @@
 <template>
   <div class="tab-menu-container">
     <div class="tab-menu">
-      <button type="button" class="tab" @click="select(tab.label)" v-for="tab in tabs"
-        :class="{ active: value === tab.label }">
+      <button
+        type="button"
+        class="tab"
+        @click="onSelect(tab.label)"
+        v-for="(tab, i) in tabs"
+        :key="i"
+        :class="{ active: value === tab.label }"
+      >
         {{ tab.label }}
       </button>
     </div>
@@ -10,21 +16,20 @@
 </template>
 
 <script setup>
-const emit = defineEmits(['change'])
+const emit = defineEmits(["change"]);
 const props = defineProps({
   tabs: {
     type: Array,
-    required: true
+    required: true,
   },
   value: {
-    type: String
-  }
-})
+    type: String,
+  },
+});
 
-const select = (tab) => {
-  emit('change', tab)
-}
-
+const onSelect = (tab) => {
+  emit("change", tab);
+};
 </script>
 
 <style lang="scss" scoped>
@@ -43,6 +48,15 @@ const select = (tab) => {
     text-align: left;
     font-family: $ff-alternative;
     transition: border 0.3s ease;
+
+    text-align: center;
+
+    &:first-of-type {
+      text-align: left;
+    }
+    &:last-of-type {
+      text-align: right;
+    }
 
     &.active {
       color: $clr-primary;

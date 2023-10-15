@@ -5,11 +5,16 @@
     </div>
     <TabMenu :tabs="tabs" @change="changeTab" :value="selectedTab" />
     <TransitionGroup name="fade" tag="ul">
-      <li v-for="(article, index) in filteredArticles" :key="`article-${index}`">
-        <NuxtLink :to="article.link" class="article-item">
+      <li
+        v-for="(article, index) in filteredArticles"
+        :key="`article-${index}`"
+      >
+        <NuxtLink :to="`/guides/${article.title}`" class="article-item">
           <img :src="article.thumbnail" alt="article thumbnail" />
           <div class="article-text">
+            <span>{{ article.author }} - </span>
             <span>{{ article.publishedAt }}</span>
+
             <p>{{ article.title }}</p>
           </div>
         </NuxtLink>
@@ -22,40 +27,39 @@
 const props = defineProps({
   header: {
     type: String,
-    required: false
+    required: false,
   },
   articles: {
     type: Array,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 
-const selectedTab = ref(props.articles[0].heading)
+const selectedTab = ref(props.articles[0].heading);
 
 const changeTab = (e) => {
-  selectedTab.value = e
-}
+  selectedTab.value = e;
+};
 
 const tabs = computed(() => {
   return props.articles.map((item) => {
-    return { label: item.heading }
-  })
-})
+    return { label: item.heading };
+  });
+});
 
 const filteredArticles = computed(() => {
   const list = props.articles.find((item) => {
-    return item.heading === selectedTab.value
-  })
+    return item.heading === selectedTab.value;
+  });
 
-  return list.articles
-})
+  return list.articles;
+});
 </script>
 
 <style lang="scss" scoped>
 .article-list {
   display: flex;
   flex-direction: column;
-  max-width: 23em;
 
   .article-list-header {
     align-self: center;
@@ -69,7 +73,6 @@ const filteredArticles = computed(() => {
     display: flex;
     margin-top: 1em;
 
-
     img {
       max-height: 4.375em;
     }
@@ -79,6 +82,12 @@ const filteredArticles = computed(() => {
 
       span {
         font-size: 0.625em;
+        color: $clr-gray-dark;
+
+        &:first-of-type {
+          margin-right: 0.3em;
+          color: $clr-white;
+        }
       }
     }
   }

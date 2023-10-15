@@ -1,22 +1,56 @@
-@import url('https://fonts.googleapis.com/css2?family=Lalezar&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lalezar&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap");
 
 $clr-primary: #f8a219;
-$clr-secondary: #1C1F26;
-$clr-secondary-dark: #2A2C35;
-$clr-white: #FFF;
-$clr-black: #1E1E1E;
+$clr-secondary: #1c1f26;
+$clr-secondary-dark: #2a2c35;
+$clr-secondary-darker: #393939;
+$clr-white: #fff;
+$clr-black: #1e1e1e;
+$clr-gray: #c4c4c4;
+$clr-gray-dark: #ffffff99;
+$clr-gray-darker: #4f4f4f;
+$clr-offwhite: #e0e0e0;
 
-$ff-primary: 'Inter', sans-serif;
+$ff-primary: "Inter", sans-serif;
 
 $ff-body: $ff-primary;
-$ff-heading: 'Lalezar', cursive;
-$ff-alternative: 'Oswald', sans-serif;
+$ff-heading: "Lalezar", cursive;
+$ff-alternative: "Oswald", sans-serif;
+$ff-alternative-2: "Montserrat", sans-serif;
 
-$fs-heading-1: 4.5rem;
-$fs-heading-2: 2.5rem;
+$fs-heading-1: 4rem;
+$fs-heading-2: 2rem;
 
+@mixin respond($breakpoint) {
+  @if $breakpoint == phone {
+    @media only screen and (max-width: 600px) {
+      @content;
+    } //600px
+  }
+  @if $breakpoint == tab-port {
+    @media only screen and (max-width: 900px) {
+      @content;
+    } //900px
+  }
+  @if $breakpoint == tab-land {
+    @media only screen and (max-width: 1200px) {
+      @content;
+    } //1200px
+  }
+  @if $breakpoint == desktop {
+    @media only screen and (max-width: 1350px) {
+      @content;
+    } //1200px
+  }
+  @if $breakpoint == big-desktop {
+    @media only screen and (min-width: 1800) {
+      @content;
+    } //1800px
+  }
+}
 
 body {
   background-color: $clr-black;
@@ -52,8 +86,13 @@ button {
   $max-width: 1440px;
   $padding: 7.625rem;
 
-  width: min($max-width, 100% - ($padding * 2));
-  margin-inline: auto;
+  width: min($max-width, 100% - ($padding * 2)) !important;
+  margin-inline: auto !important;
+
+  @include respond(tab-port) {
+    width: 100% !important;
+    padding: 1rem !important;
+  }
 }
 
 select {
@@ -71,5 +110,3 @@ input {
   color: $clr-black;
   font-family: $ff-body;
 }
-
-

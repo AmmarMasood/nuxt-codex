@@ -1,8 +1,15 @@
 <template>
   <div class="hero-card" :class="rarity">
     <img class="hero-card-border" :src="border" />
-    <img class="hero-card-image" :src="props.hero.image" :alt="`Image of ${hero.name}`" />
-    <FactionBanner :factions="props.hero.factions" :isLord="props.hero.isLord" />
+    <img
+      class="hero-card-image"
+      :src="props.hero.image"
+      :alt="`Image of ${hero.name}`"
+    />
+    <FactionBanner
+      :factions="props.hero.factions"
+      :isLord="props.hero.isLord"
+    />
     <ClassBanner :heroClass="props.hero.class" />
     <!-- <div class="level" v-if="!maxLevel">lvl. 1</div>
     <div class="level max" v-else>lvl. Max</div>
@@ -11,6 +18,9 @@
 </template>
 
 <script setup>
+import FactionBanner from "./FactionBanner.vue";
+import ClassBanner from "../ClassBanner.vue";
+
 const props = defineProps({
   hero: {
     type: Object,
@@ -47,10 +57,17 @@ const border = computed(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 9em;
-  background-size: cover;
+  width: auto;
+  height: 15em;
+  max-width: 12em;
+  background-size: contain;
   background-repeat: no-repeat;
   transition: all 0.4s ease;
+
+  & > img {
+    height: 100%;
+    width: auto;
+  }
 
   &.legendary {
     background-image: url("~/assets/image/card-gold.png");
